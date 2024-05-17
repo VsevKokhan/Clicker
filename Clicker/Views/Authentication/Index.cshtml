@@ -1,0 +1,22 @@
+﻿@using Clicker.Controllers
+<div>Auth</div>
+<body>
+    @switch ((Exc)TempData["Exc"])
+
+    {
+        case Exc.Name:
+            <p style="color: red;">Логин не тот.</p>
+            break;
+        case Exc.Password:
+            <p style="color: red;">Пароль не тот.</p>
+            break;
+    }
+</body>
+    
+
+
+<form action="Authentication/Index" method="post">
+    <p>Login: <input name="login" /></p>
+    <p>Password: <input name="password" /></p>
+    <input type="submit" value="Send" />
+</form>

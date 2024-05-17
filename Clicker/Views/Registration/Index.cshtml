@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+<div>Введите логин и пароль </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+ 
+</head>
+<body>
+    @if ((bool)TempData["IsUsernameTaken"])
+    {
+        <p style="color: red;">Логин уже занят.</p>
+    }
+
+    <form action="Registration/Index" method="post">
+        <p>Login: <input name="login" /></p>
+        <p>Password: <input name="password" /></p>
+        <input type="submit" value="Send" />
+    </form>
+
+</body>
+</html>
