@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Register";
+    var errorMessage = TempData["IsUsernameTaken"] as string;
 }
 <div>Введите логин и пароль </div>
 <!DOCTYPE html>
@@ -9,10 +9,13 @@
  
 </head>
 <body>
-    @if ((bool)TempData["IsUsernameTaken"])
+    @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <p style="color: red;">Логин уже занят.</p>
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
     }
+
 
     <form action="Registration/Index" method="post">
         <p>Login: <input name="login" /></p>

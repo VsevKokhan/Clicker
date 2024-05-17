@@ -8,17 +8,18 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
             return View();
         }
         [HttpPost]
         public IActionResult Index(string login, string password)
         {
-            TempData["IsUsernameTaken"] = false;
+            
             using (MyDbContext db = new MyDbContext())
             {
                 if(db.users.Any(x => x.name == login))
                 {
-                    TempData["IsUsernameTaken"] = true;
+                    TempData["IsUsernameTaken"] = "Этот логин уже занят, выберите другой.";
 
                     return RedirectToAction(nameof(Index));
                 }

@@ -1,6 +1,7 @@
 ﻿using Clicker.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Clicker.Controllers
 {
@@ -9,18 +10,35 @@ namespace Clicker.Controllers
         
         public IActionResult Index()
         {
-            string login;
-            string password;
-            login = TempData["Login"] as string;
-            password = TempData["Password"] as string;
-            User list;
+            string login = TempData["Login"] as string;
+            string password = TempData["Password"] as string;
+            
+            User? person;
+            
             using (MyDbContext context = new MyDbContext())
             {
-                list = context.users.Where(x => x.name == login && x.password == password).First();
+                person = context.users.FirstOrDefault(x => x.name == login && x.password == password);
             }
-            return View(model:list);
             
+            return View(model: person);
+            
+        }
+        
+        [HttpPost]
+        public ActionResult IncrementCoins(string login, string password)
+        {
 
+
+            User? person;
+            using (MyDbContext context = new MyDbContext())
+            {
+                person = context.users.FirstOrDefault(x => x.name == login && x.password == password);
+                person.coins += 1;
+                context.SaveChanges();
+            }
+            TempData["Login"] = login;
+            TempData["Password"] = password;
+            return RedirectToAction("Index"); // Перенаправляем пользователя обратно на страницу кликера
         }
     }
 }

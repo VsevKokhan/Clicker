@@ -1,15 +1,17 @@
 ﻿@using Clicker.Controllers
+
+@{
+    var errorMessage = TempData["Exc"] as string;
+}
+
+
 <div>Auth</div>
 <body>
-    @switch ((Exc)TempData["Exc"])
-
+    @if (!string.IsNullOrEmpty(errorMessage))
     {
-        case Exc.Name:
-            <p style="color: red;">Логин не тот.</p>
-            break;
-        case Exc.Password:
-            <p style="color: red;">Пароль не тот.</p>
-            break;
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
     }
 </body>
     

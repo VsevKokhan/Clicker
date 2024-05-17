@@ -11,11 +11,19 @@
     <link rel="stylesheet" href="css">
 </head>
 <body>
+    <!-- Отображение информации о пользователе -->
     <div class="info">
         <span class="name">Имя: @Model.name</span>
         <span class="age">Пароль: @Model.password</span>
         <span class="coins">койны: @Model.coins</span>
     </div>
+
+    <!-- Форма для увеличения количества монет -->
+    <form action="@Url.Action("IncrementCoins", "Home")" method="post">
+        <input type="hidden" name="login" value="@Model.name" />
+        <input type="hidden" name="password" value="@Model.password" />
+        <button id="clickButton" type="submit">Кликнуть</button>
+    </form>
 </body>
 </html>
 

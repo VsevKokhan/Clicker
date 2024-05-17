@@ -8,52 +8,31 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            TempData["Exc"] = Exc.None;
+            
             return View();
         }
         [HttpPost]
         public IActionResult Index(string login, string password)
         {
-            
-            switch (Check(login, password))
+            using (var db = new MyDbContext())
             {
-                case Exc.None:
-                    TempData["Login"] = login;
-                    TempData["Password"] = password;
-
-                    return RedirectToAction("Index","Home");
-                    
-                case Exc.Password:
-                    TempData["Exc"] = Exc.Password;
-                    return RedirectToAction(nameof(Index));
-                case Exc.Name:
-                    TempData["Exc"] = Exc.Name;
-                    return RedirectToAction(nameof(Index));
-
-            }
-            return Content("Неизвестная ошибка");
-        }
-        public Exc Check(string login, string password)
-        {
-            using(var db = new MyDbContext()) 
-            {
-                if(db.users.Any(x => x.name != login))
+                if (!db.users.Any(x => x.name == login))
                 {
-                    return Exc.Name;
+                    TempData["Exc"] = "Нет такого логина";
+                    return RedirectToAction("Index", "Authentication");
                 }
-                else if(db.users.Any(x => x.name == login && !x.password.Equals(password)))
+                if (db.users.Any(x => x.name == login && !x.password.Equals(password)))
                 {
-                    return Exc.Password;
+                    TempData["Exc"] = "Неправильный пароль";
+                    return RedirectToAction("Index", "Authentication");
                 }
-                else  return Exc.None; 
+                
             }
+            TempData["Login"] = login;
+            TempData["Password"] = password;
+            return RedirectToAction("Index", "Home");
         }
         
     }
-    public enum Exc
-    {
-        Password = 0,
-        Name = 1,
-        None = 2
-    }
+    
 }
