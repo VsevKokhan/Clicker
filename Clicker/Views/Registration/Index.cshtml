@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var errorMessage = TempData["IsUsernameTaken"] as string;
 }
-<div>Введите логин и пароль </div>
+<div>Введите логин и пароль для регистрации</div>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +21,7 @@
     <form action="Registration/Index" method="post">
         <p>Login: <input name="login" /></p>
         <p>Password: <input name="password" /></p>
-        <input type="submit" value="Send" />
+        <input type="submit" value="Зарегистрироваться" />
     </form>
 
 </body>

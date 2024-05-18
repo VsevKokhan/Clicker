@@ -38,5 +38,14 @@ namespace Clicker.Controllers
 
             return Json(new { success = person != null, coins = person?.coins ?? 0 });
         }
+        public string ChangePassword(int id)
+        {
+            using (var db = new MyDbContext()) 
+            {
+                User? user = db.users.FirstOrDefault(x => x.id == id);
+                
+            
+            }
+        }
     }
 }
