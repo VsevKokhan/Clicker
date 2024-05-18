@@ -1,6 +1,7 @@
 ﻿@using Clicker.Controllers
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var errorMessage = TempData["Exc"] as string;
 }
 
@@ -9,7 +10,7 @@
 <body>
     @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="custom-error" role="alert">
             @errorMessage
         </div>
     }

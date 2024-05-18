@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var errorMessage = TempData["IsUsernameTaken"] as string;
 }
 <div>Введите логин и пароль </div>
@@ -11,7 +12,7 @@
 <body>
     @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="custom-error" role="alert">
             @errorMessage
         </div>
     }

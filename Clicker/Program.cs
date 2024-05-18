@@ -19,7 +19,7 @@ namespace Clicker
             // устанавливаем сопоставление маршрутов с контроллерами
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Authentication}/{action=Index}/{id?}");
+                pattern: "{controller=Registration}/{action=Index}/{id?}");
 
             app.Run();
         }
