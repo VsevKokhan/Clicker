@@ -16,7 +16,7 @@ namespace Clicker.Controllers
         {
             if (!ModelState.IsValid)
             {
-                // Если модель не валидна, возвращаем форму с ошибками валидации
+                
                 return View(user);
             }
             using (var db = new MyDbContext())
