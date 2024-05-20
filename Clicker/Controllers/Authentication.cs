@@ -8,28 +8,33 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //asdasdasd
+            
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string login, string password)
+        public IActionResult Index(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                // Если модель не валидна, возвращаем форму с ошибками валидации
+                return View(user);
+            }
             using (var db = new MyDbContext())
             {
-                if (!db.users.Any(x => x.name == login))
+                if (!db.users.Any(x => x.name == user.name))
                 {
                     TempData["Exc"] = "Нет такого логина";
                     return RedirectToAction("Index", "Authentication");
                 }
-                if (db.users.Any(x => x.name == login && !x.password.Equals(password)))
+                if (db.users.Any(x => x.name == user.name && !x.password.Equals(user.password)))
                 {
                     TempData["Exc"] = "Неправильный пароль";
                     return RedirectToAction("Index", "Authentication");
                 }
                 
             }
-            TempData["Login"] = login;
-            TempData["Password"] = password;
+            TempData["Login"] = user.name;
+            TempData["Password"] = user.password;
             return RedirectToAction("Index", "Home");
         }
         
