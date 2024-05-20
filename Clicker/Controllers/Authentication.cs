@@ -33,9 +33,7 @@ namespace Clicker.Controllers
                 }
                 
             }
-            TempData["Login"] = user.name;
-            TempData["Password"] = user.password;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { name = user.name, password = user.password } );
         }
         
     }

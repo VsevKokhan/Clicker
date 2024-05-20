@@ -7,16 +7,13 @@ namespace Clicker.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string name, string password)
         {
-            string login = TempData["Login"] as string;
-            string password = TempData["Password"] as string;
-
             User? person;
 
             using (MyDbContext context = new MyDbContext())
             {
-                person = context.users.FirstOrDefault(x => x.name == login && x.password == password);
+                person = context.users.FirstOrDefault(x => x.name == name && x.password == password);
             }
 
             return View(model: person);
@@ -50,12 +47,18 @@ namespace Clicker.Controllers
             return View(model: user);
             
         }
-        public void СhangePasswordButton(int newPassword)
+        public IActionResult СhangePasswordButton(User user)
         {
-            using(MyDbContext context = new MyDbContext())
+            if (!ModelState.IsValid)
             {
-                
+                return View("ChangePasswordMain", model: user);
             }
+            using (MyDbContext context = new MyDbContext())
+            {
+                context.users.FirstOrDefault(x => x.id == user.id).password = user.password;
+                context.SaveChanges();
+            }
+            return RedirectToAction("Index", new {name = user.name, password = user.password});
         }
     }
 }

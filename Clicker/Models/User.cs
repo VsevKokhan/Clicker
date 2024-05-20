@@ -11,7 +11,5 @@ namespace Clicker.Models
         public string password { get; set; }
         public long coins { get; set; }
         
-
-
     }
 }
