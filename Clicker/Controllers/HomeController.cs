@@ -39,16 +39,23 @@ namespace Clicker.Controllers
             return Json(new { success = person != null, coins = person?.coins ?? 0 });
         }
         
-        public string ChangePassword(int id)
+        public IActionResult ChangePasswordMain(int id)
         {
-            User? a;
+            User? user;
             using (MyDbContext context = new MyDbContext()) 
             {
-                a = context.users.FirstOrDefault(x => x.id == id);
-
+                user = context.users.FirstOrDefault(x => x.id == id);
 
             }
+            return View(model: user);
             
+        }
+        public void СhangePasswordButton(int newPassword)
+        {
+            using(MyDbContext context = new MyDbContext())
+            {
+                
+            }
         }
     }
 }
