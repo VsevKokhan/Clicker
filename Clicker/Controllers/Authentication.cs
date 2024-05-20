@@ -8,7 +8,7 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
+            //asdasdasd
             return View();
         }
         [HttpPost]
