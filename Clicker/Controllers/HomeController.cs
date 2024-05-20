@@ -44,8 +44,8 @@ namespace Clicker.Controllers
             {
                 User? user = db.users.FirstOrDefault(x => x.id == id);
                 
-            
             }
+            return "asdasdasd";
         }
     }
 }
