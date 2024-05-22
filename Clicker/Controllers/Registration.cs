@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Clicker.Controllers
 {
-    public class Registration : Controller
+    public class RegistrationController : Controller
     {
         [HttpGet]
         public IActionResult Index()
