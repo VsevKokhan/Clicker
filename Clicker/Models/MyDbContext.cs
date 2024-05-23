@@ -6,11 +6,8 @@
     {
         public DbSet<User> users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public MyDbContext(DbContextOptions<MyDbContext> options):base(options)
         {
-            // Настройте соединение с базой данных
-            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=1;SearchPath=users");
-            
         }
     }
 

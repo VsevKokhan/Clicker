@@ -5,10 +5,15 @@ namespace Clicker.Controllers
 {
     public class AuthenticationController : Controller
     {
+        private readonly MyDbContext context;
+
+        public AuthenticationController(MyDbContext context)
+        {
+            this.context = context;
+        }
         [HttpGet]
         public IActionResult Index()
         {
-            
             return View();
         }
         [HttpPost]
@@ -16,23 +21,20 @@ namespace Clicker.Controllers
         {
             if (!ModelState.IsValid)
             {
-                
                 return View(user);
             }
-            using (var db = new MyDbContext())
+            
+            if (!context.users.Any(x => x.name == user.name))
             {
-                if (!db.users.Any(x => x.name == user.name))
-                {
-                    TempData["Exc"] = "Нет такого логина";
-                    return RedirectToAction("Index", "Authentication");
-                }
-                if (db.users.Any(x => x.name == user.name && !x.password.Equals(user.password)))
-                {
-                    TempData["Exc"] = "Неправильный пароль";
-                    return RedirectToAction("Index", "Authentication");
-                }
-                
+                TempData["Exc"] = "Нет такого логина";
+                return RedirectToAction("Index", "Authentication");
             }
+            if (context.users.Any(x => x.name == user.name && !x.password.Equals(user.password)))
+            {
+                TempData["Exc"] = "Неправильный пароль";
+                return RedirectToAction("Index", "Authentication");
+            }
+                
             return RedirectToAction("Index", "Home", new { name = user.name, password = user.password } );
         }
         

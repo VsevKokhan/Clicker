@@ -13,13 +13,14 @@ namespace Clicker
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllersWithViews(); // добавляем сервисы MVC
-
+            builder.Services.AddDbContext<MyDbContext>(options =>
+               options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
             var app = builder.Build();
 
             // устанавливаем сопоставление маршрутов с контроллерами
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Registration}/{action=Index}/{id?}");
+                pattern: "{controller=Authentication}/{action=Index}/{id?}");
 
             app.Run();
         }

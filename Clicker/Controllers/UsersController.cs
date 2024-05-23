@@ -15,9 +15,9 @@ namespace Clicker.Controllers
     {
         private readonly MyDbContext _context;
 
-        public UsersController()
+        public UsersController(MyDbContext context)
         {
-            MyDbContext context = new MyDbContext();
+            
             
                 _context = context;
             
