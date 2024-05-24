@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Clicker.Application.Services;
+using Clicker.Domain.Core;
+using Clicker.Domain.Interfaces;
+using Clicker.Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Clicker.Models;
+
+
 
 namespace Clicker.Controllers
 {
@@ -13,95 +18,60 @@ namespace Clicker.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly MyDbContext context;
+        private readonly UserService _userService;
 
-        public UsersController(MyDbContext context)
+        public UsersController(UserService userService)
         {
-            this.context = context;
+            _userService = userService;
         }
 
-        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Getusers()
+        public ActionResult<IEnumerable<User>> GetUsers()
         {
-            return await context.users.ToListAsync();
+            return Ok(_userService.GetAllUsers());
         }
 
-        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public ActionResult<User> GetUser(int id)
         {
-            var user = await context.users.FindAsync(id);
-
+            var user = _userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound();
             }
-
-            return user;
+            return Ok(user);
         }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public ActionResult<User> CreateUser(User user)
+        {
+            _userService.AddUser(user);
+            return CreatedAtAction(nameof(GetUser), new { id = user.id }, user);
+        }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public IActionResult UpdateUser(int id, User user)
         {
             if (id != user.id)
             {
                 return BadRequest();
             }
 
-            context.Entry(user).State = EntityState.Modified;
-
-            try
-            {
-                await context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _userService.UpdateUser(user);
             return NoContent();
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
-        {
-            context.users.Add(user);
-            await context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUser), new { id = user.id }, user);
-        }
-
-        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public IActionResult DeleteUser(int id)
         {
-            var user = await context.users.FindAsync(id);
+            var user = _userService.GetUserById(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            context.users.Remove(user);
-            await context.SaveChangesAsync();
-            
+            _userService.DeleteUser(id);
             return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return context.users.Any(e => e.id == id);
         }
     }
 }

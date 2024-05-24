@@ -1,4 +1,7 @@
-﻿using Clicker.Models;
+﻿using Clicker.Application.Services;
+using Clicker.Domain.Core;
+using Clicker.Domain.Interfaces;
+using Clicker.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,14 +10,14 @@ namespace Clicker.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MyDbContext context;
-        public HomeController(MyDbContext context)
+        private readonly UserService context;
+        public HomeController(UserService context)
         {
             this.context = context;
         }
         public IActionResult Index(string name, string password)
         {
-            User? person = context.users.FirstOrDefault(x => x.name == name && x.password == password);
+            User? person = context.GetAllUsers().FirstOrDefault(x => x.name == name && x.password == password);
             
             return View(model: person);
         }
@@ -22,11 +25,11 @@ namespace Clicker.Controllers
         [HttpPost]
         public JsonResult IncrementCoins(string login, string password)
         {
-            User? person = context.users.FirstOrDefault(x => x.name == login && x.password == password);
+            User? person = context.GetAllUsers().FirstOrDefault(x => x.name == login && x.password == password);
             if (person != null)
             {
                 person.coins += 1;
-                context.SaveChanges();
+                context.Save();
             }
             
             return Json(new { success = person != null, coins = person?.coins ?? 0 });
@@ -34,7 +37,7 @@ namespace Clicker.Controllers
         
         public IActionResult ChangePasswordMain(int id)
         {
-            User?  user = context.users.FirstOrDefault(x => x.id == id);
+            User?  user = context.GetAllUsers().FirstOrDefault(x => x.id == id);
 
             return View(model: user);
         }
@@ -45,8 +48,8 @@ namespace Clicker.Controllers
                 return View("ChangePasswordMain", model: user);
             }
             
-            context.users.FirstOrDefault(x => x.id == user.id).password = user.password;
-            context.SaveChanges();
+            context.GetAllUsers().FirstOrDefault(x => x.id == user.id).password = user.password;
+            context.Save();
             
             return RedirectToAction("Index", new {name = user.name, password = user.password});
         }

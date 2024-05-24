@@ -1,13 +1,15 @@
-﻿using Clicker.Models;
+﻿
+using Clicker.Application.Services;
+using Clicker.Domain.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clicker.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly MyDbContext context;
+        private readonly UserService context;
 
-        public AuthenticationController(MyDbContext context)
+        public AuthenticationController(UserService context)
         {
             this.context = context;
         }
@@ -24,12 +26,12 @@ namespace Clicker.Controllers
                 return View(user);
             }
             
-            if (!context.users.Any(x => x.name == user.name))
+            if (!context.GetAllUsers().Any(x => x.name == user.name))
             {
                 TempData["Exc"] = "Нет такого логина";
                 return RedirectToAction("Index", "Authentication");
             }
-            if (context.users.Any(x => x.name == user.name && !x.password.Equals(user.password)))
+            if (context.GetAllUsers().Any(x => x.name == user.name && !x.password.Equals(user.password)))
             {
                 TempData["Exc"] = "Неправильный пароль";
                 return RedirectToAction("Index", "Authentication");

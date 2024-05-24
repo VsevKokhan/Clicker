@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Clicker.Models
+namespace Clicker.Domain.Core
 {
     public class User
     {
@@ -10,6 +10,6 @@ namespace Clicker.Models
         [Required(ErrorMessage = "Пароль обязателен для заполнения.")]
         public string password { get; set; }
         public long coins { get; set; }
-        
+
     }
 }
