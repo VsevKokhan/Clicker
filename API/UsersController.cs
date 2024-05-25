@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Clicker.Application.Services;
+﻿using Clicker.Application.Services;
 using Clicker.Domain.Core;
-using Clicker.Domain.Interfaces;
-using Clicker.Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
-
-
-namespace Clicker.Controllers
+namespace API
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -4,6 +4,7 @@ using System;
 using Clicker.Application.Services;
 using Clicker.Domain.Interfaces;
 using Clicker.Infrastructure.Data;
+using API;
 
 namespace Clicker
 {
@@ -18,6 +19,8 @@ namespace Clicker
                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<UserService>();
+
+            builder.Services.AddScoped<UsersController>();
             var app = builder.Build();
 
             // устанавливаем сопоставление маршрутов с контроллерами

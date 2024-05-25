@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\Clicker.Application.Services\Clicker.Application.Services.csproj" />
     <ProjectReference Include="..\Clicker.Infrastructure.Data\Clicker.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Core\Clicker.Domain.Core.csproj" />
