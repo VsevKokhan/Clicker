@@ -1,9 +1,7 @@
 ﻿using Clicker.Application.Services;
 using Clicker.Domain.Core;
-using Clicker.Domain.Interfaces;
-using Clicker.Infrastructure.Data;
+
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Clicker.Controllers
