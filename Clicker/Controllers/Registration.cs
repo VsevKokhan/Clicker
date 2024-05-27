@@ -22,7 +22,7 @@ namespace Clicker.Controllers
         public IActionResult Index(User model)
         {
             
-            if (!ModelState.IsValid)  // Проверяем состояние модели
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
