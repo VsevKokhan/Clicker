@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi" Version="5.3.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\API\API.csproj" />
     <ProjectReference Include="..\Clicker.Application.Services\Clicker.Application.Services.csproj" />
-    <ProjectReference Include="..\Clicker.Controllers\Clicker.Controllers.csproj" />
     <ProjectReference Include="..\Clicker.Infrastructure.Data\Clicker.Infrastructure.Data.csproj" />
     <ProjectReference Include="..\Core\Clicker.Domain.Core.csproj" />
   </ItemGroup>

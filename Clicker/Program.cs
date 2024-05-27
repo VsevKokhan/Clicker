@@ -21,6 +21,7 @@ namespace Clicker
             builder.Services.AddScoped<UserService>();
 
             builder.Services.AddScoped<UsersController>();
+            
             var app = builder.Build();
 
             // устанавливаем сопоставление маршрутов с контроллерами
@@ -30,5 +31,6 @@ namespace Clicker
 
             app.Run();
         }
+        
     }
 }

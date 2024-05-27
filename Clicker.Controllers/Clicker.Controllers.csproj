@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Clicker.Application.Services\Clicker.Application.Services.csproj" />
+    <ProjectReference Include="..\Clicker.Views\Clicker.Views.csproj" />
     <ProjectReference Include="..\Core\Clicker.Domain.Core.csproj" />
   </ItemGroup>
 
