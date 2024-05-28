@@ -13,6 +13,7 @@ namespace Clicker.Controllers
         {
             this.context = context;
         }
+        [HttpGet]
         public IActionResult Index(string name, string password)
         {
             User? person = context.GetAllUsers().FirstOrDefault(x => x.name == name && x.password == password);
@@ -32,13 +33,14 @@ namespace Clicker.Controllers
             
             return Json(new { success = person != null, coins = person?.coins ?? 0 });
         }
-        
+        [HttpGet]
         public IActionResult ChangePasswordMain(int id)
         {
             User?  user = context.GetAllUsers().FirstOrDefault(x => x.id == id);
 
             return View(model: user);
         }
+        [HttpPost]
         public IActionResult СhangePasswordButton(User user)
         {
             if (!ModelState.IsValid)
