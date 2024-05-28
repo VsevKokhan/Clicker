@@ -28,7 +28,7 @@ namespace Clicker.Controllers
             }
             if (context.GetAllUsers().Any(x => x.name == model.name))
             {
-                TempData["IsUsernameTaken"] = "Этот логин уже занят, выберите другой.";
+                TempData["UsernameTaken"] = "Этот логин уже занят, выберите другой.";
 
                 return RedirectToAction(nameof(Index));
             }
