@@ -26,14 +26,14 @@ namespace Clicker.Controllers
             {
                 return View(model);
             }
-            if (context.GetAllUsers().Any(x => x.name == model.name))
+            if (context.GetAll().Any(x => x.name == model.name))
             {
                 TempData["UsernameTaken"] = "Этот логин уже занят, выберите другой.";
 
                 return RedirectToAction(nameof(Index));
             }
                
-            context.AddUser(new User() { name = model.name, password = model.password, coins = 0 });
+            context.Add(new User() { name = model.name, password = model.password, coins = 0 });
             context.Save();
             
             return RedirectToAction("Index","Authentication");

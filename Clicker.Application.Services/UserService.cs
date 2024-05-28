@@ -13,34 +13,33 @@ namespace Clicker.Application.Services
             _userRepository = userRepository;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> GetAll()
         {
             return _userRepository.GetUserList();
         }
 
-        public User GetUserById(int id)
+        public User? GetById(int id)
         {
             return _userRepository.GetUser(id);
         }
 
-        public void AddUser(User user)
+        public void Add(User user)
         {
             // Здесь могут быть дополнительные бизнес-правила
             _userRepository.Create(user);
-            _userRepository.Save();
+            Save();
         }
 
-        public void UpdateUser(User user)
+        public void Update(User user)
         {
-            // Здесь могут быть дополнительные бизнес-правила
             _userRepository.Update(user);
-            _userRepository.Save();
+            Save();
         }
 
-        public void DeleteUser(int id)
+        public void Delete(int id)
         {
             _userRepository.Delete(id);
-            _userRepository.Save();
+            Save();
         }
         public void Save()
         {

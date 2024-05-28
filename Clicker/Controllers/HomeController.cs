@@ -16,7 +16,7 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult Index(string name, string password)
         {
-            User? person = context.GetAllUsers().FirstOrDefault(x => x.name == name && x.password == password);
+            User? person = context.GetAll().FirstOrDefault(x => x.name == name && x.password == password);
             
             return View(model: person);
         }
@@ -24,7 +24,7 @@ namespace Clicker.Controllers
         [HttpPost]
         public JsonResult IncrementCoins(string login, string password)
         {
-            User? person = context.GetAllUsers().FirstOrDefault(x => x.name == login && x.password == password);
+            User? person = context.GetAll().FirstOrDefault(x => x.name == login && x.password == password);
             if (person != null)
             {
                 person.coins += 1;
@@ -36,7 +36,7 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult ChangePasswordMain(int id)
         {
-            User?  user = context.GetAllUsers().FirstOrDefault(x => x.id == id);
+            User?  user = context.GetAll().FirstOrDefault(x => x.id == id);
 
             return View(model: user);
         }
@@ -48,7 +48,7 @@ namespace Clicker.Controllers
                 return View("ChangePasswordMain", model: user);
             }
             
-            context.GetAllUsers().FirstOrDefault(x => x.id == user.id).password = user.password;
+            context.GetAll().FirstOrDefault(x => x.id == user.id).password = user.password;
             context.Save();
             
             return RedirectToAction("Index", new {name = user.name, password = user.password});

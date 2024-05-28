@@ -19,13 +19,13 @@ namespace API
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetUsers()
         {
-            return Ok(_userService.GetAllUsers());
+            return Ok(_userService.GetAll());
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> GetUser(int id)
         {
-            var user = _userService.GetUserById(id);
+            var user = _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -36,32 +36,32 @@ namespace API
         [HttpPost]
         public ActionResult<User> CreateUser(User user)
         {
-            _userService.AddUser(user);
+            _userService.Add(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.id }, user);
         }
 
         [HttpPut("{id}")]
         public IActionResult UpdateUser(int id, User user)
         {
-            if (id != user.id)
+            if (_userService.GetById(id) == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _userService.UpdateUser(user);
+            user.id = id;
+            _userService.Update(user);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-            var user = _userService.GetUserById(id);
+            var user = _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _userService.DeleteUser(id);
+            _userService.Delete(id);
             return NoContent();
         }
     }

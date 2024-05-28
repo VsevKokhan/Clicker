@@ -26,12 +26,12 @@ namespace Clicker.Controllers
                 return View(user);
             }
             
-            if (!context.GetAllUsers().Any(x => x.name == user.name))
+            if (!context.GetAll().Any(x => x.name == user.name))
             {
                 TempData["Exc"] = "Нет такого логина";
                 return RedirectToAction("Index", "Authentication");
             }
-            if (context.GetAllUsers().Any(x => x.name == user.name && !x.password.Equals(user.password)))
+            if (context.GetAll().Any(x => x.name == user.name && !x.password.Equals(user.password)))
             {
                 TempData["Exc"] = "Неправильный пароль";
                 return RedirectToAction("Index", "Authentication");

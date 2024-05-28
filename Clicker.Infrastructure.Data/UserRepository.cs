@@ -23,9 +23,9 @@ namespace Clicker.Infrastructure.Data
             return db.users.ToList();
         }
 
-        public User GetUser(int id)
+        public User? GetUser(int id)
         {
-            return db.users.Find(id);
+            return db.users.AsNoTracking().FirstOrDefault(u => u.id == id);
         }
 
         public void Create(User user)
@@ -33,14 +33,14 @@ namespace Clicker.Infrastructure.Data
             db.users.Add(user);
         }
 
-        public void Update(User user)
+        public void Update(User UpdateUser)
         {
-            db.Entry(user).State = EntityState.Modified;
+            db.users.Update(UpdateUser);
         }
 
         public void Delete(int id)
         {
-            User user = db.users.Find(id);
+            User user = GetUser(id);
             if (user != null)
                 db.users.Remove(user);
         }
