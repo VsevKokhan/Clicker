@@ -9,7 +9,7 @@ namespace UserServiceTests
     public class UserServiceTest
     {
         [TestMethod]
-        public void Tset_GetAll()
+        public void Test_GetAll()
         {
             //Arrange
             var mock = new Mock<IUserRepository>();
@@ -21,6 +21,18 @@ namespace UserServiceTests
             //Act
             var res = serv.GetAll().ToList();
             CollectionAssert.AreEqual(userexpected, res);
+        }
+        [TestMethod]
+        public void Test_GetUserById()
+        {
+            var mock = new Mock<IUserRepository>();
+            mock.Setup(a => a.GetUser(1)).Returns(new User {  id = 1, name = "1", password = "p", coins = 123 });
+
+            UserService service = new UserService(mock.Object);
+            User userexpected = new User { id = 1, name = "1", password = "p", coins = 123 };
+
+            var res = service.GetById(1);
+            Assert.AreEqual(res, userexpected);
         }
     }
 }
