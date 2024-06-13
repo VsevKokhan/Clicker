@@ -1,8 +1,8 @@
 ﻿using Clicker.Application.Services;
 using Clicker.Domain.Core;
-
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Security.Cryptography.Xml;
 
 namespace Clicker.Controllers
 {
@@ -14,8 +14,10 @@ namespace Clicker.Controllers
             this.context = context;
         }
         [HttpGet]
-        public IActionResult Index(string name, string password)
+        public IActionResult Index()
         {
+            var name = HttpContext.Session.GetString("Name");
+            var password = HttpContext.Session.GetString("Password");
             User? person = context.GetAll().FirstOrDefault(x => x.name == name && x.password == password);
             
             return View(model: person);
@@ -36,7 +38,7 @@ namespace Clicker.Controllers
         [HttpGet]
         public IActionResult ChangePasswordMain(int id)
         {
-            User?  user = context.GetAll().FirstOrDefault(x => x.id == id);
+            User? user = context.GetAll().FirstOrDefault(x => x.id == id);
 
             return View(model: user);
         }
@@ -50,8 +52,9 @@ namespace Clicker.Controllers
             
             context.GetAll().FirstOrDefault(x => x.id == user.id).password = user.password;
             context.Save();
-            
-            return RedirectToAction("Index", new {name = user.name, password = user.password});
+            HttpContext.Session.SetString("Password", user.password);
+
+            return RedirectToAction("Index");
         }
     }
 }

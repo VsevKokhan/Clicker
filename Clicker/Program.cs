@@ -14,6 +14,13 @@ namespace Clicker
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDistributedMemoryCache(); // Использование в памяти кэша для сессий
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true; 
+                options.Cookie.IsEssential = true;
+            });
             builder.Services.AddControllersWithViews(); // добавляем сервисы MVC
             builder.Services.AddDbContext<MyDbContext>(options =>
                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -24,10 +31,13 @@ namespace Clicker
             
             var app = builder.Build();
 
+            
+            app.UseSession();
+
             // устанавливаем сопоставление маршрутов с контроллерами
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Authentication}/{action=Index}/{id?}");
+                pattern: "{controller=Registration}/{action=Index}/{id?}");
 
             app.Run();
         }

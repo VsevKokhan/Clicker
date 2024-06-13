@@ -18,12 +18,12 @@
 
 <form asp-action="Index" method="post">
     <div>
-        <label for="name">Login:</label>
+        <label asp-for="name">Login:</label>
         <input name="name" asp-for="name" />
         <span asp-validation-for="name" class="text-danger"></span>
     </div>
     <div>
-        <label for="password">Password:</label>
+        <label asp-for="password">Password:</label>
         <input name="password" asp-for="password" type="password" />
         <span asp-validation-for="password" class="text-danger"></span>
     </div>

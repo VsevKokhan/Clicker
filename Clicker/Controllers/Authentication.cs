@@ -36,8 +36,10 @@ namespace Clicker.Controllers
                 TempData["Exc"] = "Неправильный пароль";
                 return RedirectToAction("Index", "Authentication");
             }
-                
-            return RedirectToAction("Index", "Home", new { name = user.name, password = user.password } );
+            HttpContext.Session.SetString("Name",user.name);
+            HttpContext.Session.SetString("Password", user.password);
+
+            return RedirectToAction("Index", "Home");
         }
         
     }
