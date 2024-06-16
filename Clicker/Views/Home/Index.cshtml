@@ -35,9 +35,13 @@
     </style>
 </head>
 <body>
-    @Html.ActionLink("Сменить пароль",
-            "ChangePasswordMain",
-            new { id = @Model.id })
+    @using (Html.BeginForm("ChangePasswordMain", "Home", FormMethod.Post))
+    {
+        <input type="hidden" name="id" value="@Model.id" />
+        <button type="submit" style="background:none;border:none;padding:0;color:#00f;text-decoration:underline;cursor:pointer;">
+            Смена пароля
+        </button>
+    }
     <div class="info">
         <span class="name">Логин: @Model.name </span>
         <span class="coins">Монеты: <span id="coinCount">@Model.coins</span></span>

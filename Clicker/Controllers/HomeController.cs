@@ -18,6 +18,10 @@ namespace Clicker.Controllers
         {
             var name = HttpContext.Session.GetString("Name");
             var password = HttpContext.Session.GetString("Password");
+            if (name == null || password == null)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
             User? person = context.GetAll().FirstOrDefault(x => x.name == name && x.password == password);
             
             return View(model: person);
@@ -35,7 +39,7 @@ namespace Clicker.Controllers
             
             return Json(new { success = person != null, coins = person?.coins ?? 0 });
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult ChangePasswordMain(int id)
         {
             User? user = context.GetAll().FirstOrDefault(x => x.id == id);
@@ -45,6 +49,11 @@ namespace Clicker.Controllers
         [HttpPost]
         public IActionResult СhangePasswordButton(User user)
         {
+            if (HttpContext.Session.GetString("Password") == null || HttpContext.Session.GetString("Name") == null)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View("ChangePasswordMain", model: user);

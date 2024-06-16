@@ -31,7 +31,6 @@ namespace Clicker
             
             var app = builder.Build();
 
-            
             app.UseSession();
 
             // устанавливаем сопоставление маршрутов с контроллерами
